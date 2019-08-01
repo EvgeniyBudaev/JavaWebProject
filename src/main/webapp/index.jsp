@@ -47,10 +47,14 @@
                                         <a class="btn btn-primary" href="/login"> Войти</a>
                                     </c:otherwise>
                                 </c:choose>
-
-
-
                             </div>
+
+                            <div class="logout">
+                                <form action="/login" method="post">
+                                    <input class="btn btn-primary" name="logout" type="submit" value="Выйти">
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </nav>

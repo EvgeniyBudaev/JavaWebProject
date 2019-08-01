@@ -69,7 +69,13 @@ header .nav-item a::after {
     transform: scale(0);
     transition: all .3s;
 }
-/*Полоска разжимается пд навигационной кнопкой*/
+
+/*Кнопка Выйти*/
+.logout{
+    margin-left: 10px;
+}
+
+/*Полоска разжимается под навигационной кнопкой*/
 header .nav-item a:hover::after {  
     transform: scale(1);
 }

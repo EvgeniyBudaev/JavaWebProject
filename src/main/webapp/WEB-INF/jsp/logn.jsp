@@ -16,8 +16,8 @@
 <div class="signin">
     <form action="/login" method="post">
         <h2 class="color: white">Учетная запись</h2>
-        <input type="text" name="username" placeholder="Логин">
-        <input type="password" name="pass" placeholder="Пароль">
+        <input type="text" name="username" placeholder="Логин" autocomplete="off">
+        <input type="password" name="pass" placeholder="Пароль" autocomplete="off">
 
             <input type="submit" value="Войти">
         <br>

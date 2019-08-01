@@ -20,6 +20,13 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
+        String logout = req.getParameter("logout");
+        if(logout!=null){
+            req.getSession().invalidate();
+        }
+
         String username = req.getParameter("username");
         String pass = req.getParameter("pass");
 
