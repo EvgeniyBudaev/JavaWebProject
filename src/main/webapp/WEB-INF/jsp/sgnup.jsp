@@ -57,13 +57,13 @@
 <div class="signup">
     <form action="/sgnup" method="post">
         <h2 style="color: #fff;">Регистрация</h2>
-        <input type="text" name="login" placeholder="Логин" value=""/>
+        <input type="text" name="login" placeholder="Логин" autocomplete="off" value=""/>
         <br><br>
-        <input type="password" name="pass" placeholder="Пароль">
+        <input type="password" name="pass" placeholder="Пароль" autocomplete="off">
         <br><br>
-        <input type="passwordConfirmation" name="passConfirmation" placeholder="Подтверждение пароля">
+        <input type="passwordConfirmation" name="passConfirmation" placeholder="Подтверждение пароля" autocomplete="off">
         <br><br>
-        <input type="text" name="role" placeholder="admin:1, студент:0">
+        <input type="text" name="role" placeholder="admin:1, студент:0" autocomplete="off">
         <br><br>
         <input type="submit" value="Зарегистрироваться" onclick="myFunction()"/>
         <br><br>

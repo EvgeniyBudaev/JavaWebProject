@@ -14,7 +14,7 @@ public class DBManager {
         ArrayList<Student> allStudents = new ArrayList<>();
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
@@ -41,7 +41,7 @@ public class DBManager {
         ArrayList<Discipline> allDisciplines = new ArrayList<>();
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
@@ -64,7 +64,7 @@ public class DBManager {
         ArrayList<Term> allTerms = new ArrayList<>();
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
@@ -88,13 +88,13 @@ public class DBManager {
         ArrayList<Discipline> allDisciplines = new ArrayList<>();
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM terms_disciplines\n" +
-                    "left join disciplines ON terms_disciplines.discipline_id = disciplines.id\n" +
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students_control.terms_disciplines\n" +
+                    "left join students_control.disciplines ON students_control.terms_disciplines.discipline_id = students_control.disciplines.id\n" +
                     "where terms_disciplines.term_id = "+idTerm+" and disciplines.status = '1'");
             while (rs.next()){
                 Discipline discipline = new Discipline();
@@ -112,12 +112,12 @@ public class DBManager {
     public static void createStudent(String surname, String name, String group_name, String date){
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("INSERT INTO `students` (`name`, `surname`, `group_name`, `date`) VALUES ('"+name+"', '"+surname+"', '"+group_name+"', '"+date+"')");
+            stmt.execute("INSERT INTO `students_control`.`students` (`name`, `surname`, `group_name`, `date`) VALUES ('"+name+"', '"+surname+"', '"+group_name+"', '"+date+"')");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -127,12 +127,12 @@ public class DBManager {
     public static void createDiscipline(String discipline){
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("INSERT INTO `disciplines` (`discipline`) VALUES ('"+discipline+"')");
+            stmt.execute("INSERT INTO `students_control`.`disciplines` (`discipline`) VALUES ('"+discipline+"')");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -142,12 +142,12 @@ public class DBManager {
     public static void createTerm(String duration, String[] disciplines){
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT id,  term FROM terms ORDER BY ID DESC limit 1");
+            ResultSet resultSet = stmt.executeQuery("SELECT id,  term FROM students_control.terms ORDER BY ID DESC limit 1");
             String currentTerm = null;
             int idTerm = 0;
             while (resultSet.next()){
@@ -157,18 +157,18 @@ public class DBManager {
             int termNumber = 0;
             termNumber = Integer.parseInt(currentTerm.substring(8));
             String term  = "Семестр "+(++termNumber);
-            stmt.execute("INSERT INTO `terms` (`term`, `duration`) VALUES ('"+term+"','"+duration+"')");
+            stmt.execute("INSERT INTO `students_control`.`terms` (`term`, `duration`) VALUES ('"+term+"','"+duration+"')");
 
             int newId = ++idTerm;
             for (String discipline:disciplines) {
-                ResultSet resultSet1 = stmt.executeQuery("SELECT id FROM disciplines\n" +
+                ResultSet resultSet1 = stmt.executeQuery("SELECT id FROM students_control.disciplines\n" +
                         "where discipline ='"+discipline+"'");
                 int idDiscipline = 0;
                 while (resultSet1.next()){
                     idDiscipline = resultSet1.getInt("id");
                 }
 
-                stmt.execute("INSERT INTO `terms_disciplines` (`term_id`, `discipline_id`) VALUES ('"+newId +"','"+idDiscipline+"')");
+                stmt.execute("INSERT INTO `students_control`.`terms_disciplines` (`term_id`, `discipline_id`) VALUES ('"+newId +"','"+idDiscipline+"')");
             }
 
         }catch (Exception e){
@@ -178,12 +178,12 @@ public class DBManager {
 
     public static void deleteDiscipline(String id) {
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("UPDATE `disciplines` SET `status` = '0' WHERE (`id` = '"+id+"');");
+            stmt.execute("UPDATE `students_control`.`disciplines` SET `status` = '0' WHERE (`id` = '"+id+"');");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -192,12 +192,12 @@ public class DBManager {
 
     public static void deleteStudents(String id) {
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("UPDATE `students` SET `status` = '0' WHERE (`id` = '"+id+"');");
+            stmt.execute("UPDATE `students_control`.`students` SET `status` = '0' WHERE (`id` = '"+id+"');");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -206,12 +206,12 @@ public class DBManager {
 
     public static void deleteTerm(String idTermDelete) {
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("UPDATE `terms` SET `status` = '0' WHERE (`id` = '"+idTermDelete+"');");
+            stmt.execute("UPDATE `students_control`.`terms` SET `status` = '0' WHERE (`id` = '"+idTermDelete+"');");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -221,12 +221,12 @@ public class DBManager {
     public static void modifyDiscipline(String id, String modifiedDiscipline){
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
-            stmt.execute("UPDATE `disciplines` SET `discipline` = '" + modifiedDiscipline + "' WHERE (`id` = '" + id + "')");
+            stmt.execute("UPDATE `students_control`.`disciplines` SET `discipline` = '" + modifiedDiscipline + "' WHERE (`id` = '" + id + "')");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -237,10 +237,10 @@ public class DBManager {
         String name = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("select discipline from disciplines where id =" + id + "");
+            ResultSet rs = statement.executeQuery("select discipline from students_control.disciplines where id =" + id + "");
 
             while (rs.next()) {
                 name = rs.getString("discipline");
@@ -256,10 +256,10 @@ public class DBManager {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM terms where id = " + idTerm);
+            ResultSet rs = statement.executeQuery("SELECT * FROM students_control.terms where id = " + idTerm);
 
             while (rs.next()) {
                 Term term = new Term();
@@ -306,17 +306,17 @@ public class DBManager {
         String durationResult = duration1+wordWeek;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
             Statement statement = con.createStatement();
-            statement.execute("DELETE FROM `terms_disciplines` WHERE (`term_id` = '" + id + "')");
+            statement.execute("DELETE FROM `students_control`.`terms_disciplines` WHERE (`term_id` = '" + id + "')");
             if (modifiedDisciplinesId != null) {
                 for (String newDisciplineId : modifiedDisciplinesId) {
-                    statement.execute("INSERT INTO `terms_disciplines` (`term_id`, `discipline_id`) VALUES ('" + id + "', '" + newDisciplineId + "')");
+                    statement.execute("INSERT INTO `students_control`.`terms_disciplines` (`term_id`, `discipline_id`) VALUES ('" + id + "', '" + newDisciplineId + "')");
                 }
             }
 
-            statement.execute("UPDATE `terms` SET `duration` = '" + durationResult + "' WHERE (`id` = '" + id + "')");
+            statement.execute("UPDATE `students_control`.`terms` SET `duration` = '" + durationResult + "' WHERE (`id` = '" + id + "')");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -326,10 +326,10 @@ public class DBManager {
     public static void modifyStudent(String id, String modifiedLastName, String modifiedFirstName, String modifiedGroup, String modifiedDate) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
             Statement statement = con.createStatement();
-            statement.execute("UPDATE `students` SET `name` = '" + modifiedFirstName + "', `surname` = '" + modifiedLastName + "', `group_name` = '" + modifiedGroup + "', `date` = '" + modifiedDate + "' WHERE (`id` = '" + id + "')");
+            statement.execute("UPDATE `students_control`.`students` SET `name` = '" + modifiedFirstName + "', `surname` = '" + modifiedLastName + "', `group_name` = '" + modifiedGroup + "', `date` = '" + modifiedDate + "' WHERE (`id` = '" + id + "')");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -338,10 +338,10 @@ public class DBManager {
     public static Student getStudent(String id) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("select name, surname, group_name, date from students where id =" + id + "");
+            ResultSet rs = statement.executeQuery("select name, surname, group_name, date from students_control.students where id =" + id + "");
 
             while (rs.next()) {
                 Student student = new Student();
@@ -362,16 +362,16 @@ public class DBManager {
     public static LinkedHashMap<Discipline, String> getDisciplinesAndMarkByTerm(String id, String termId) {
         LinkedHashMap<Discipline, String> disciplinesAndMark = new LinkedHashMap<>();
         try {
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement statement = con.createStatement();
 
-            ResultSet rs = statement.executeQuery("select disciplines.id, disciplines.discipline , marks.mark  from marks\n" +
-                    "join terms_disciplines on marks.term_discipline_id=terms_disciplines.id\n" +
-                    "join terms on terms_disciplines.term_id = terms.id\n" +
-                    "join disciplines on terms_disciplines.discipline_id=disciplines.id\n" +
+            ResultSet rs = statement.executeQuery("select disciplines.id, disciplines.discipline , marks.mark  from students_control.marks\n" +
+                    "join students_control.terms_disciplines on marks.term_discipline_id=terms_disciplines.id\n" +
+                    "join students_control.terms on terms_disciplines.term_id = terms.id\n" +
+                    "join students_control.disciplines on terms_disciplines.discipline_id=disciplines.id\n" +
                     " where marks.student_id =" + id + " and terms_disciplines.term_id=" + termId + "");
             while (rs.next()) {
                 Discipline discipline = new Discipline();
@@ -391,16 +391,16 @@ public class DBManager {
     public static String getAvgMark(String id, String termId) {
         double result = 0;
         try {
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement statement = con.createStatement();
 
-            ResultSet rs = statement.executeQuery("select  round(avg(marks.mark),1)   from marks\n" +
-                    "join terms_disciplines on marks.term_discipline_id=terms_disciplines.id\n" +
-                    "join terms on terms_disciplines.term_id = terms.id\n" +
-                    "join disciplines on terms_disciplines.discipline_id=disciplines.id\n" +
+            ResultSet rs = statement.executeQuery("select  round(avg(marks.mark),1)   from students_control.marks\n" +
+                    "join students_control.terms_disciplines on marks.term_discipline_id=terms_disciplines.id\n" +
+                    "join students_control.terms on terms_disciplines.term_id = terms.id\n" +
+                    "join students_control.disciplines on terms_disciplines.discipline_id=disciplines.id\n" +
                     " where marks.student_id =" + id + " and terms_disciplines.term_id=" + termId + "");
             while (rs.next()) {
                 result = rs.getDouble("round(avg(marks.mark),1)");
@@ -426,12 +426,13 @@ public class DBManager {
     public static Account getAccountBy(String login, String password) {
 
         try {
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            Connection con = DriverManager.getConnection(url, "root", "Prodaza58");
-            Statement statement = con.createStatement();
+            Connection con= DriverManager.getConnection(
+                    url,"root","Prodaza58");
+            Statement stmt = con.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM account where login = '" + login + "'AND password = '" + password + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students_control.account where login = '" + login + "'AND password = '" + password + "'");
 
             while (rs.next()) {
                 Account account = new Account();
@@ -452,13 +453,13 @@ public class DBManager {
     public static void createAccount(String login, String password, String role){
 
         try{
-            String url = "jdbc:mysql://localhost/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
+            Connection con= DriverManager.getConnection(
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
 
-            stmt.execute("INSERT INTO `account` (`login`, `password`, `role`) VALUES ('"+login+"', '"+password+"', '"+role+"')");
+            stmt.execute("INSERT INTO `students_control`.`account` (`login`, `password`, `role`) VALUES ('"+login+"', '"+password+"', '"+role+"')");
 
         }catch (Exception e){
             e.printStackTrace();
