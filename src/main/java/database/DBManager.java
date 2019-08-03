@@ -432,7 +432,7 @@ public class DBManager {
                     url,"root","Prodaza58");
             Statement stmt = con.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM students_control.account where login = '" + login + "'AND password = '" + password + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students_control.account where login = '"+login+"'AND password = '"+password+"'");
 
             while (rs.next()) {
                 Account account = new Account();
