@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name="TermListController", urlPatterns = "/term_list")
 public class TermListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Term> terms = DBManager.getAllActivTerms();
+        List<Term> terms = DBManager.getAllActivTerms();
         req.setAttribute("allTerms", terms);
         req.setAttribute("selectedTerm", terms.get(0));
         ArrayList<Discipline> disciplinesByTerm = DBManager.getAllActivDisciplinesByTerm(terms.get(0).getId());
@@ -35,7 +36,7 @@ public class TermListController extends HttpServlet {
             DBManager.deleteTerm(idTermDelete);
             resp.sendRedirect("/term_list");
         } else {
-            ArrayList<Term> terms = DBManager.getAllActivTerms();
+            List<Term> terms = DBManager.getAllActivTerms();
             String termId = req.getParameter("selectedTerm");
             int selectedId = Integer.parseInt(termId);
             for (Term s : terms) {

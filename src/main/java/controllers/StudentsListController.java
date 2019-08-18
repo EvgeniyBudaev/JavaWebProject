@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name="StudentsListController", urlPatterns = "/students_list")
 public class StudentsListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Student> students = DBManager.getAllActivStudents();
+        List<Student> students = DBManager.getAllActivStudents();
         req.setAttribute("allStudents", students); //подготовили посылку для отправки на jsp страницу. allStudents вставляем на jsp страницу в items. students вставлено из ArrayList<Student> students.
         req.getRequestDispatcher("WEB-INF/jsp/students_list.jsp").forward(req, resp);
     }

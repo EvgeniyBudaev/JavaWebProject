@@ -5,13 +5,15 @@ import entity.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DBManager {
 
-    public static ArrayList<Student> getAllActivStudents(){
-        ArrayList<Student> allStudents = new ArrayList<>();
+    //Вывод списка всех студентов
+    public static List<Student> getAllActivStudents(){
+        List<Student> allStudents = new ArrayList<>();
 
         try{
             String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -31,14 +33,15 @@ public class DBManager {
                 allStudents.add(student);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Упс!Что-то пошло не так! Не удалось отобразить список всех студентов!");
         }
 
         return allStudents;
     }
 
-    public static ArrayList<Discipline> getAllActivDisciplines(){
-        ArrayList<Discipline> allDisciplines = new ArrayList<>();
+    //Вывод списка всех дисциплин
+    public static List<Discipline> getAllActivDisciplines(){
+        List<Discipline> allDisciplines = new ArrayList<>();
 
         try{
             String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com/students_control?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -55,13 +58,15 @@ public class DBManager {
                 allDisciplines.add(discipline);
         }
     }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Упс!Что-то пошло не так! Не удалось отобразить список всех дисциплин!");
+
         }
         return allDisciplines;
     }
 
-    public static ArrayList<Term> getAllActivTerms(){
-        ArrayList<Term> allTerms = new ArrayList<>();
+    //Вывод списка всех семестров
+    public static List<Term> getAllActivTerms(){
+        List<Term> allTerms = new ArrayList<>();
 
         try{
             String url = "jdbc:mysql://studentscontrol.ctkdt25s6qvp.us-east-2.rds.amazonaws.com?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -79,7 +84,8 @@ public class DBManager {
                 allTerms.add(term);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Упс!Что-то пошло не так! Не удалось отобразить список всех семестров!");
+
         }
         return allTerms;
     }
